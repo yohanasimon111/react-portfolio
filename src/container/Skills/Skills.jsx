@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import ReactTooltip from "react-tooltip";
+import { Tooltip, TooltipProvider } from "react-tooltip";
 
 import { AppWrap, MotionWrap } from "../../wrapper";
 import { urlFor, client } from "../../client";
@@ -21,7 +21,7 @@ const Skills = () => {
   }, []);
 
   return (
-    <>
+    <TooltipProvider>
       <h2 className="head-text">Skills &amp; Experience</h2>
 
       <div className="app__skills-container">
@@ -63,21 +63,19 @@ const Skills = () => {
                       whileInView={{ opacity: [0, 1] }}
                       transition={{ duration: 0.5 }}
                       className="app__skills-exp-work"
-                      data-tip
-                      data-for={work.name}
+                      data-tooltip-id={work.name}
                     >
                       <h4 className="bold-text">{work.name}</h4>
                       <p className="p-text">{work.company}</p>
                     </motion.div>
                     {/* Work Description */}
-                    <ReactTooltip
+                    <Tooltip
                       id={work.name}
                       effect="solid"
                       arrowColor="#fff"
                       className="skills-tooltip"
-                    >
-                      {work.desc}
-                    </ReactTooltip>
+                      content={work.desc}
+                    />
                   </React.Fragment>
                 ))}
               </motion.div>
@@ -85,7 +83,7 @@ const Skills = () => {
           ))}
         </motion.div>
       </div>
-    </>
+    </TooltipProvider>
   );
 };
 
